@@ -18,7 +18,7 @@ function Cart() {
               key={item.id}
               id={item.id}
               image={item.image}
-              title={item.title}
+              ti  tle={item.title}
               brand={item.brand}
               price={item.price} 
               quantity={item.quantity}

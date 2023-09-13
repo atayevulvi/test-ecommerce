@@ -4,21 +4,25 @@ const wishlistSlice = createSlice({
   name: 'wishlist',
   initialState: {
     wishlist: [],
-  },
+  },  
   reducers: {
     addToWish: (state, action) => {
-      const itemInWish = state.wishlist.find((item) => item.id === action.payload);
-      if (itemInWish) {
-        const removeItem = state.wishlist.filter((item) => item.id !== action.payload);
-        state.wishlist = removeItem;
+      const itemInCart = state.wishlist.find((item) => item.id === action.payload.id);
+      if (itemInCart) {
+        itemInCart.quantity++;
       } else {
-        state.wishlist.push({ ...action.payload });
+        state.wishlist.push({ ...action.payload, quantity: 1 });
       }
+    },
+    removeItem: (state, action) => {
+      const removeItem = state.wishlist.filter((item) => item.id !== action.payload);
+      state.wishlist = removeItem;
     },
   },
 });
 
 export const wishlistReducer = wishlistSlice.reducer;
 export const {
-  addToWish
+  addToWish,
+  removeItem
 } = wishlistSlice.actions;
