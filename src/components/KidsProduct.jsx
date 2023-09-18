@@ -5,8 +5,25 @@ import { useDispatch } from 'react-redux';
 import { AiFillHeart, AiOutlineShoppingCart } from 'react-icons/ai';
 import { GoSearch } from 'react-icons/go';
 import { addToWish } from '../redux/wishlistSlice';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const KidsProduct = ({ item }) => {
+  const notify = () => {
+    toast('🦄 Səbətə uğurla əlavə olundu!', {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  };
+  const handleCartClick = () => {
+    dispatch(addToCart(item));
+    notify();
+  }
   const dispatch = useDispatch();
   const iconStyle = 'h-[40px] w-[40px] rounded-full flex items-center justify-center bg-white text-lg m-2 cursor-pointer hover:bg-[#894af3] hover:text-white hover:scale-[1.1] ease-in duration-100';
   const [hovereffect, setHoverEffect] = useState('opacity-0');
@@ -32,14 +49,15 @@ const KidsProduct = ({ item }) => {
       <p className="text-[18px] text-red-500">{item.price}</p>
       <p className="text-[16px] text-lime-800">{item.brand}</p>
       <div className={`flex items-center justify-center w-[100%] h-[100%] absolute ` + hovereffect}>
-        <div className={iconStyle}>
-          <div onClick={() => dispatch(addToCart(item))}>
-          <AiOutlineShoppingCart  />
-          </div>
-        </div>
+      <div className={iconStyle}>
+      <div onClick={handleCartClick}>
+        <ToastContainer />
+        <AiOutlineShoppingCart />
+      </div>
+    </div>
         <div className={iconStyle}>
           <div onClick={handleWishClick} style={{ color: isWishClicked ? 'red' : 'blue' }}>
-          <AiFillHeart  />
+            <AiFillHeart />
           </div>
         </div>
         <div className={iconStyle}>
